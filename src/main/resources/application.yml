@@ -1,0 +1,12 @@
+spring:
+  servlet:
+    multipart:
+      maxFileSize: 200MB
+      maxRequestSize: 200MB
+  application:
+    name: text-me-search
+  elasticsearch:
+    rest:
+      uris: http://localhost:9200
+server:
+  port: 8082
