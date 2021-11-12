@@ -12,6 +12,7 @@ public class Config {
     public ObjectMapper getObjectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
+        objectMapper.findAndRegisterModules();
         return objectMapper;
     }
 }

@@ -13,7 +13,7 @@ import java.util.List;
 @Component
 @AllArgsConstructor
 @Slf4j
-public class FileToPojoConverter {
+public class FileConverter {
 
     private final ObjectMapper jacksonObjectMapper;
 
