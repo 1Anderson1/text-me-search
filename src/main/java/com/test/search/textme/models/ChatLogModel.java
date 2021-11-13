@@ -6,14 +6,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import org.springframework.data.elasticsearch.annotations.Field;
 
 import java.time.LocalDateTime;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor
-public class LiveChat {
+public class ChatLogModel {
     @JsonProperty("chat_id")
     @NonNull
     private Integer chatId;

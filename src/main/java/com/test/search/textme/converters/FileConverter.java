@@ -1,7 +1,7 @@
 package com.test.search.textme.converters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.test.search.textme.models.LiveChat;
+import com.test.search.textme.models.ChatLogModel;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -17,10 +17,10 @@ public class FileConverter {
 
     private final ObjectMapper jacksonObjectMapper;
 
-    public List<LiveChat> convert(MultipartFile file) {
+    public List<ChatLogModel> convert(MultipartFile file) {
         try {
-            LiveChat[] liveChats = jacksonObjectMapper.readValue(file.getBytes(), LiveChat[].class);
-            return Arrays.asList(liveChats);
+            ChatLogModel[] chatLogModels = jacksonObjectMapper.readValue(file.getBytes(), ChatLogModel[].class);
+            return Arrays.asList(chatLogModels);
         } catch (Exception e) {
             log.error("Data conversion error", e);
             throw new IllegalArgumentException("File is not valid");

@@ -1,11 +1,14 @@
 package com.test.search.textme.controllers;
 
+import com.test.search.textme.models.ChatResponse;
 import com.test.search.textme.services.DataStorageService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/data")
@@ -25,10 +28,10 @@ public class DataController {
     }
 
     @GetMapping("/searchChats")
-    public ResponseEntity<String> searchChats(@RequestParam String text) {
+    public ResponseEntity<List<ChatResponse>> searchChats(@RequestParam String text) {
         try {
-            dataStorageService.searchChats(text);
-            return new ResponseEntity<>(HttpStatus.OK);
+            List<ChatResponse> chatResponseList = dataStorageService.searchChats(text);
+            return new ResponseEntity<>(chatResponseList, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

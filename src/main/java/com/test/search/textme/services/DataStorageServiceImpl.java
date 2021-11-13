@@ -3,7 +3,8 @@ package com.test.search.textme.services;
 import com.test.search.textme.converters.ChatConverter;
 import com.test.search.textme.converters.FileConverter;
 import com.test.search.textme.entities.LiveChatEntity;
-import com.test.search.textme.models.LiveChat;
+import com.test.search.textme.models.ChatLogModel;
+import com.test.search.textme.models.ChatResponse;
 import com.test.search.textme.repositories.LiveChatRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilde
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.elasticsearch.index.query.QueryBuilders.fuzzyQuery;
@@ -29,15 +31,18 @@ public class DataStorageServiceImpl implements DataStorageService {
 
     @Override
     public void initDb(@NonNull MultipartFile file) {
-        List<LiveChat> liveChats = fileConverter.convert(file);
-        List<LiveChatEntity> liveChatEntities = chatConverter.convert(liveChats);
+        List<ChatLogModel> chatLogModels = fileConverter.convert(file);
+        List<LiveChatEntity> liveChatEntities = chatConverter.convert(chatLogModels);
         liveChatRepository.saveAll(liveChatEntities);
     }
 
     @Override
-    public void searchChats(@NonNull String text) {
-        SearchHits<LiveChatEntity> result = elasticsearchRestTemplate.search(getQuery(text), LiveChatEntity.class);
-
+    public List<ChatResponse> searchChats(@NonNull String text) {
+        SearchHits<LiveChatEntity> queryResult = elasticsearchRestTemplate.search(getQuery(text), LiveChatEntity.class);
+        if (!queryResult.hasSearchHits()) {
+            return Collections.emptyList();
+        }
+        return chatConverter.convert(queryResult);
     }
 
     private NativeSearchQuery getQuery(@NonNull String text) {
