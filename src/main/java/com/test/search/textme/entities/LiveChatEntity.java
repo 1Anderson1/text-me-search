@@ -8,7 +8,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
-import java.util.Date;
+import java.util.List;
 
 
 @Document(indexName = "chat")
@@ -20,8 +20,6 @@ public class LiveChatEntity {
     @NonNull
     private Integer chatId;
     @NonNull
-    @Field(type = FieldType.Date)
-    private Date timestamp;
-    private Integer operatorId;
-    private String content;
+    @Field(type = FieldType.Nested, includeInParent = true)
+    private List<TextMessage> messages;
 }

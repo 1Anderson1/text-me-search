@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import org.springframework.data.elasticsearch.annotations.Field;
 
 import java.time.LocalDateTime;
 
@@ -21,5 +22,7 @@ public class LiveChat {
     private LocalDateTime timestamp;
     @JsonProperty("operator_id")
     private Integer operatorId;
+    @JsonProperty("gw_account_number")
+    private String gwAccountNumber;
     private String content;
 }

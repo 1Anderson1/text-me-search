@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/data")
 @AllArgsConstructor
-public class FileController {
+public class DataController {
 
     private final DataStorageService dataStorageService;
 
@@ -18,7 +18,7 @@ public class FileController {
     public ResponseEntity<String> initDb(@RequestParam("file") MultipartFile file) {
         try {
             dataStorageService.initDb(file);
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
